@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Калькулятор квадратных уравнений</string>
+    <string name="factor_a_cannot_equal_to_0">Коеффициент A не может быть равным 0</string>
+    <string name="invalid_factors">"Неправильные коэффициенты: "</string>
+    <string name="solve_btn">Решить</string>
+</resources>

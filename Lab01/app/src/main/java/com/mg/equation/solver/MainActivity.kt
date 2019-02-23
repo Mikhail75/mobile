@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         textView.text = Html.fromHtml("A*x<sup><small>2</small></sup> + B * x + C = 0")
 
         val button = findViewById<Button>(R.id.button)
+        button.text = this.getString(R.string.solve_btn)
         button.setOnClickListener{
             onSolveButtonClick()
         }
@@ -67,12 +68,17 @@ class MainActivity : AppCompatActivity() {
     private fun validateFactors(factors: Factors) : Boolean {
         if (factors.a == null || factors.b == null || factors.c == null )
         {
-            // TODO tost
+            val errorMessage = this.getString(R.string.invalid_factors) +
+                    (if (factors.a == null) "A " else "") +
+                    (if (factors.b == null) "B " else "") +
+                    (if (factors.c == null) "C " else "")
+            Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_SHORT).show()
             return false
         }
+
         if (factors.a!! == 0.0)
         {
-            Toast.makeText(this@MainActivity, "The factor A cannot be equal to 0", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, this.getString(R.string.factor_a_cannot_equal_to_0), Toast.LENGTH_SHORT).show()
             return false
         }
 
