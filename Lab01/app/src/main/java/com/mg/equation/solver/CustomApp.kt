@@ -18,8 +18,4 @@ class CustomApp : Application() {
     override fun onCreate() {
         super.onCreate()
     }
-
-    fun test() : String {
-        return "Hello from CustomApp!"
-    }
 }
