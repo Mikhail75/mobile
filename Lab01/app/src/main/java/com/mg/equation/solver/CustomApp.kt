@@ -10,7 +10,7 @@ class CustomApp : Application() {
     companion object {
         private lateinit var instance: CustomApp
 
-        fun getApplication() : CustomApp {
+        fun getApplication(): CustomApp {
             return instance
         }
     }

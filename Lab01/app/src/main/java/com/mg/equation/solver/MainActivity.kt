@@ -10,7 +10,7 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
-    private data class Factors (
+    private data class Factors(
         var a: Double,
         var b: Double,
         var c: Double
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         val button = findViewById<Button>(R.id.button)
         button.text = this.getString(R.string.solve_btn)
-        button.setOnClickListener{
+        button.setOnClickListener {
             onSolveButtonClick()
         }
     }
@@ -35,11 +35,9 @@ class MainActivity : AppCompatActivity() {
         val result = solve(factors.a, factors.b, factors.c)
 
         var resultText = "D: " + result.d.toString()
-        if (result.d >= 0.0)
-        {
+        if (result.d >= 0.0) {
             resultText += "\nX1: " + result.x1.toString()
-            if (result.d > 0.0)
-            {
+            if (result.d > 0.0) {
                 resultText += "\nX2: " + result.x2.toString()
             }
         }
@@ -48,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         resultTextView.text = resultText
     }
 
-    private fun getFactors() : Factors? {
+    private fun getFactors(): Factors? {
         val textA = findViewById<EditText>(R.id.inputA).text
         val textB = findViewById<EditText>(R.id.inputB).text
         val textC = findViewById<EditText>(R.id.inputC).text
@@ -57,8 +55,7 @@ class MainActivity : AppCompatActivity() {
         val b = textB.toString().toDoubleOrNull()
         val c = textC.toString().toDoubleOrNull()
 
-        if (a == null || b == null || c == null )
-        {
+        if (a == null || b == null || c == null) {
             val errorMessage = this.getString(R.string.invalid_factors) +
                     (if (a == null) "A " else "") +
                     (if (b == null) "B " else "") +
@@ -67,9 +64,9 @@ class MainActivity : AppCompatActivity() {
             return null
         }
 
-        if (a == 0.0)
-        {
-            Toast.makeText(this@MainActivity, this.getString(R.string.factor_a_cannot_equal_to_0), Toast.LENGTH_SHORT).show()
+        if (a == 0.0) {
+            Toast.makeText(this@MainActivity, this.getString(R.string.factor_a_cannot_equal_to_0), Toast.LENGTH_SHORT)
+                .show()
             return null
         }
 
