@@ -11,9 +11,9 @@ import android.widget.Toast
 class MainActivity : AppCompatActivity() {
 
     private data class Factors (
-        var a: Double?,
-        var b: Double?,
-        var c: Double?
+        var a: Double,
+        var b: Double,
+        var c: Double
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,21 +31,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onSolveButtonClick() {
-        val factors = getFactors()
-        if (!validateFactors(factors))
-        {
-            return
-        }
-
-        val result = solve(factors.a!!, factors.b!!, factors.c!!)
+        val factors = getFactors() ?: return
+        val result = solve(factors.a, factors.b, factors.c)
 
         var resultText = "D: " + result.d.toString()
         if (result.d >= 0.0)
         {
-            resultText += "\nX1: " + result.x1!!.toString()
+            resultText += "\nX1: " + result.x1.toString()
             if (result.d > 0.0)
             {
-                resultText += "\nX2: " + result.x2!!.toString()
+                resultText += "\nX2: " + result.x2.toString()
             }
         }
 
@@ -53,35 +48,31 @@ class MainActivity : AppCompatActivity() {
         resultTextView.text = resultText
     }
 
-    private fun getFactors() : Factors {
+    private fun getFactors() : Factors? {
         val textA = findViewById<EditText>(R.id.inputA).text
         val textB = findViewById<EditText>(R.id.inputB).text
         val textC = findViewById<EditText>(R.id.inputC).text
 
-        return Factors(
-            textA.toString().toDoubleOrNull(),
-            textB.toString().toDoubleOrNull(),
-            textC.toString().toDoubleOrNull()
-        )
-    }
+        val a = textA.toString().toDoubleOrNull()
+        val b = textB.toString().toDoubleOrNull()
+        val c = textC.toString().toDoubleOrNull()
 
-    private fun validateFactors(factors: Factors) : Boolean {
-        if (factors.a == null || factors.b == null || factors.c == null )
+        if (a == null || b == null || c == null )
         {
             val errorMessage = this.getString(R.string.invalid_factors) +
-                    (if (factors.a == null) "A " else "") +
-                    (if (factors.b == null) "B " else "") +
-                    (if (factors.c == null) "C " else "")
+                    (if (a == null) "A " else "") +
+                    (if (b == null) "B " else "") +
+                    (if (c == null) "C " else "")
             Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_SHORT).show()
-            return false
+            return null
         }
 
-        if (factors.a!! == 0.0)
+        if (a == 0.0)
         {
             Toast.makeText(this@MainActivity, this.getString(R.string.factor_a_cannot_equal_to_0), Toast.LENGTH_SHORT).show()
-            return false
+            return null
         }
 
-        return true
+        return Factors(a, b, c)
     }
 }
