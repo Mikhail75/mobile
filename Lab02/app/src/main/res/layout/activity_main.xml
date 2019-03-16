@@ -7,13 +7,67 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <TextView
+    <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:inputType="textPersonName"
+            android:text="Main screen text"
+            android:textSize="26dp"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/resultTextView"
+    />
+    <TextView
+            android:id="@+id/resultTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Result"
+            android:textSize="26dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+    />
+    <Button
+            android:id="@+id/requestResultButton"
+            android:text="Request result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/resultTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+    />
+    <Button
+            android:text="Next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nextButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/requestResultButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="8dp"
+    />
 
 </android.support.constraint.ConstraintLayout>
