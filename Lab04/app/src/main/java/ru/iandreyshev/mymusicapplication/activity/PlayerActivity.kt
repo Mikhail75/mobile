@@ -6,10 +6,18 @@ import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_player.*
 import ru.iandreyshev.model.player.PlayingState
 import ru.iandreyshev.mymusicapplication.R
+import ru.iandreyshev.mymusicapplication.application.MusicApplication
+import ru.iandreyshev.mymusicapplication.presenter.PlayerPresenter
 import ru.iandreyshev.utils.disable
 import ru.iandreyshev.utils.enable
 
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity : AppCompatActivity(), PlayerPresenter.IView {
+
+    private val mPlayerPresenter = MusicApplication.getPlayerPresenter()
+
+    override fun updateTitle(title: String) =  updateTitleView(title)
+    override fun updateTimeline(progress: Float, currentTime: String) = updateTimelineView(progress, currentTime)
+    override fun updatePlaying(state: PlayingState) = updatePlayingButtons(state)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,20 +27,38 @@ class PlayerActivity : AppCompatActivity() {
         initTimeline()
     }
 
+    override fun onResume() {
+        super.onResume()
+        mPlayerPresenter.onAttach(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mPlayerPresenter.onDetach(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (isFinishing) {
+            mPlayerPresenter.onFinish(this)
+        }
+    }
+
     private fun initButtons() {
         btnStop.setBackgroundResource(R.drawable.icon_stop)
         btnStop.setOnClickListener {
-            // TODO: Добавить перенаправление события в презентер
+            mPlayerPresenter.onStop()
         }
 
         btnPlay.setBackgroundResource(R.drawable.icon_play)
         btnPlay.setOnClickListener {
-            // TODO: Добавить перенаправление события в презентер
+            mPlayerPresenter.onPlay()
         }
 
         btnRestart.setBackgroundResource(R.drawable.icon_restart)
         btnRestart.setOnClickListener {
-            // TODO: Добавить перенаправление события в презентер
+            mPlayerPresenter.onRestart()
         }
     }
 
@@ -41,7 +67,9 @@ class PlayerActivity : AppCompatActivity() {
         sbTimeLine.max = TIMELINE_MAX
         sbTimeLine.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                // TODO: Добавить перенаправление события в презентер
+                if (seekBar != null) {
+                    mPlayerPresenter.onChangeTimePosition(seekBar.progress.toFloat() / 100)
+                }
             }
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) = Unit
