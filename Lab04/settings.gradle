@@ -1,7 +1,6 @@
 include(
         ':app',
-        ':model',
-        ':moxy-app',
-        ':aac-app',
+        ':model'
+        ,
         ':utils'
 )
