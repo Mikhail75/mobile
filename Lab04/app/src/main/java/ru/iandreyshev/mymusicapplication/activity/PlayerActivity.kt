@@ -11,13 +11,13 @@ import ru.iandreyshev.mymusicapplication.presenter.PlayerPresenter
 import ru.iandreyshev.utils.disable
 import ru.iandreyshev.utils.enable
 
-class PlayerActivity : AppCompatActivity(), PlayerPresenter.IView {
+class PlayerActivity : AppCompatActivity() {
 
     private val mPlayerPresenter = MusicApplication.getPlayerPresenter()
 
-    override fun updateTitle(title: String) =  updateTitleView(title)
-    override fun updateTimeline(progress: Float, currentTime: String) = updateTimelineView(progress, currentTime)
-    override fun updatePlaying(state: PlayingState) = updatePlayingButtons(state)
+//    override fun updateTitle(title: String) =  updateTitleView(title)
+//    override fun updateTimeline(progress: Float, currentTime: String) = updateTimelineView(progress, currentTime)
+//    override fun updatePlaying(state: PlayingState) = updatePlayingButtons(state)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,23 +27,23 @@ class PlayerActivity : AppCompatActivity(), PlayerPresenter.IView {
         initTimeline()
     }
 
-    override fun onResume() {
-        super.onResume()
-        mPlayerPresenter.onAttach(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mPlayerPresenter.onDetach(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        if (isFinishing) {
-            mPlayerPresenter.onFinish(this)
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        mPlayerPresenter.onAttach(this)
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        mPlayerPresenter.onDetach(this)
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//
+//        if (isFinishing) {
+//            mPlayerPresenter.onFinish(this)
+//        }
+//    }
 
     private fun initButtons() {
         btnStop.setBackgroundResource(R.drawable.icon_stop)
