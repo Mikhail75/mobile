@@ -13,7 +13,9 @@ class PlayerViewModelInjector(
 
     fun getPlayerViewModel(activity: PlayerActivity): PlayerViewModel {
         val provider = ViewModelProvider(activity, Factory())
-        return provider[PlayerViewModel::class.java]
+        val model = provider[PlayerViewModel::class.java]
+        player.subscribe(model)
+        return model
     }
 
     private inner class Factory : ViewModelProvider.Factory {

@@ -4,23 +4,22 @@ import android.app.Application
 import ru.iandreyshev.model.player.Player
 import ru.iandreyshev.model.playlist.Playlist
 import ru.iandreyshev.model.repository.Repository
-import ru.iandreyshev.mymusicapplication.presenter.PlayerPresenter
 import ru.iandreyshev.mymusicapplication.presenter.PlaylistPresenter
+import ru.iandreyshev.mymusicapplication.viewmodel.PlayerViewModelInjector
+
 
 class MusicApplication : Application() {
 
     private val mRepository = Repository()
     private val mPlaylist = Playlist(mRepository.getAllSongs(), ::onSelectSong)
     private val mPlayer = Player(this)
-    private lateinit var mPlayerPresenter: PlayerPresenter
+    private lateinit var mPlayerViewModelInjector: PlayerViewModelInjector
 
     override fun onCreate() {
         super.onCreate()
 
         instance = this
-
-        mPlayerPresenter = PlayerPresenter(instance.resources, instance.mPlayer)
-        instance.mPlayer.subscribe(instance.mPlayerPresenter)
+        mPlayerViewModelInjector = PlayerViewModelInjector(instance.resources, instance.mPlayer)
     }
 
     private fun onSelectSong(songId: Long) {
@@ -38,9 +37,8 @@ class MusicApplication : Application() {
             return presenter
         }
 
-        fun getPlayerPresenter(): PlayerPresenter {
-            return instance.mPlayerPresenter
+        fun getPlayerViewModelInjector(): PlayerViewModelInjector {
+            return instance.mPlayerViewModelInjector
         }
     }
-
 }

@@ -14,11 +14,11 @@ class PlayerViewModel(
     private val player: Player
 ) : ViewModel(), IPlayerPresenter {
 
-    val mTrackTitle = MutableLiveData<String>()
-    val mTimeline = MutableLiveData<Timeline>().apply {
+    val trackTitle = MutableLiveData<String>()
+    val timeline = MutableLiveData<Timeline>().apply {
         setValue(Timeline(0, 0f))
     }
-    val mPlayingState = MutableLiveData<PlayingState>().apply {
+    val playingState = MutableLiveData<PlayingState>().apply {
         setValue(PlayingState.Disabled)
     }
 
@@ -28,14 +28,14 @@ class PlayerViewModel(
     fun onChangeTimePosition(timePercent: Float) = player.onChangeTimelinePosition(timePercent)
 
     override fun updateTitle(title: String?) {
-        mTrackTitle.value = title ?: resources.getString(R.string.player_song_not_selected)
+        trackTitle.value = title ?: resources.getString(R.string.player_song_not_selected)
     }
 
     override fun updateTimeline(timeline: Timeline) {
-        mTimeline.value = timeline
+        this.timeline.value = timeline
     }
 
     override fun updatePlaying(state: PlayingState) {
-        mPlayingState.value = state
+        playingState.value = state
     }
 }

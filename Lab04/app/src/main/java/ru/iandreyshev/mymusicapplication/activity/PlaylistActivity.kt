@@ -9,17 +9,14 @@ import ru.iandreyshev.model.player.PlayingState
 import ru.iandreyshev.model.playlist.ITrack
 import ru.iandreyshev.mymusicapplication.R
 import ru.iandreyshev.mymusicapplication.application.MusicApplication
-import ru.iandreyshev.mymusicapplication.presenter.PlayerPresenter
 import ru.iandreyshev.mymusicapplication.presenter.PlaylistPresenter
 import ru.iandreyshev.utils.disable
 import ru.iandreyshev.utils.enable
 
-class PlaylistActivity : AppCompatActivity(), PlaylistPresenter.IView, PlayerPresenter.IView {
+class PlaylistActivity : AppCompatActivity(), PlaylistPresenter.IView {
 
     private val mPlaylistPresenter = MusicApplication.getPlaylistPresenter()
-    private val mPlayerPresenter = MusicApplication.getPlayerPresenter()
-
-    override fun updatePlaying(state: PlayingState) = updatePlayingButtons(state)
+//    private val mPlayerPresenter = MusicApplication.getPlayerPresenter()
 
     override fun updatePlaylist(playlist: List<ITrack>) {
         tracksList.removeAllViews()
@@ -35,8 +32,9 @@ class PlaylistActivity : AppCompatActivity(), PlaylistPresenter.IView, PlayerPre
         }
     }
 
-    override fun updateTitle(title: String) = updateTitleView(title)
-    override fun updateTimeline(progress: Float, currentTime: String) = Unit
+//    override fun updatePlaying(state: PlayingState) = updatePlayingButtons(state)
+//    override fun updateTitle(title: String) = updateTitleView(title)
+//    override fun updateTimeline(progress: Float, currentTime: String) = Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,13 +46,13 @@ class PlaylistActivity : AppCompatActivity(), PlaylistPresenter.IView, PlayerPre
     override fun onResume() {
         super.onResume()
         mPlaylistPresenter.onAttach(this)
-        mPlayerPresenter.onAttach(this)
+//        mPlayerPresenter.onAttach(this)
     }
 
     override fun onPause() {
         super.onPause()
         mPlaylistPresenter.onDetach(this)
-        mPlayerPresenter.onDetach(this)
+//        mPlayerPresenter.onDetach(this)
     }
 
     override fun onDestroy() {
@@ -62,14 +60,14 @@ class PlaylistActivity : AppCompatActivity(), PlaylistPresenter.IView, PlayerPre
 
         if (isFinishing) {
             mPlaylistPresenter.onFinish(this)
-            mPlayerPresenter.onFinish(this)
+//            mPlayerPresenter.onFinish(this)
         }
     }
 
     private fun initIntroView() {
         btnPlay.setBackgroundResource(R.drawable.icon_play)
         btnPlay.setOnClickListener {
-            mPlayerPresenter.onPlay()
+//            mPlayerPresenter.onPlay()
         }
 
         introClickableBackground.setOnClickListener {

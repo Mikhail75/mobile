@@ -1,5 +1,6 @@
 package ru.iandreyshev.mymusicapplication.activity
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.SeekBar
@@ -7,58 +8,52 @@ import kotlinx.android.synthetic.main.activity_player.*
 import ru.iandreyshev.model.player.PlayingState
 import ru.iandreyshev.mymusicapplication.R
 import ru.iandreyshev.mymusicapplication.application.MusicApplication
-import ru.iandreyshev.mymusicapplication.presenter.PlayerPresenter
 import ru.iandreyshev.utils.disable
 import ru.iandreyshev.utils.enable
 
 class PlayerActivity : AppCompatActivity() {
 
-    private val mPlayerPresenter = MusicApplication.getPlayerPresenter()
-
-//    override fun updateTitle(title: String) =  updateTitleView(title)
-//    override fun updateTimeline(progress: Float, currentTime: String) = updateTimelineView(progress, currentTime)
-//    override fun updatePlaying(state: PlayingState) = updatePlayingButtons(state)
+    private val mInjector = MusicApplication.getPlayerViewModelInjector()
+    private val mPlayerViewModel = mInjector.getPlayerViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
+        mPlayerViewModel.trackTitle.observe(this, Observer {
+            if (it != null) {
+                updateTitleView(it)
+            }
+        })
+        mPlayerViewModel.playingState.observe(this, Observer {
+            if (it != null) {
+                updatePlayingButtons(it)
+            }
+        })
+        mPlayerViewModel.timeline.observe(this,Observer {
+            if (it != null) {
+                updateTimelineView(it.percent, it.timeInMillis.toString())
+            }
+        })
+
         initButtons()
         initTimeline()
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        mPlayerPresenter.onAttach(this)
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        mPlayerPresenter.onDetach(this)
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//
-//        if (isFinishing) {
-//            mPlayerPresenter.onFinish(this)
-//        }
-//    }
-
     private fun initButtons() {
         btnStop.setBackgroundResource(R.drawable.icon_stop)
         btnStop.setOnClickListener {
-            mPlayerPresenter.onStop()
+            mPlayerViewModel.onStop()
         }
 
         btnPlay.setBackgroundResource(R.drawable.icon_play)
         btnPlay.setOnClickListener {
-            mPlayerPresenter.onPlay()
+            mPlayerViewModel.onPlay()
         }
 
         btnRestart.setBackgroundResource(R.drawable.icon_restart)
         btnRestart.setOnClickListener {
-            mPlayerPresenter.onRestart()
+            mPlayerViewModel.onRestart()
         }
     }
 
@@ -68,7 +63,7 @@ class PlayerActivity : AppCompatActivity() {
         sbTimeLine.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 if (seekBar != null) {
-                    mPlayerPresenter.onChangeTimePosition(seekBar.progress.toFloat() / 100)
+                    mPlayerViewModel.onChangeTimePosition(seekBar.progress.toFloat() / 100)
                 }
             }
 
