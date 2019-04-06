@@ -4,7 +4,6 @@ import android.app.Application
 import ru.iandreyshev.model.player.Player
 import ru.iandreyshev.model.playlist.Playlist
 import ru.iandreyshev.model.repository.Repository
-import ru.iandreyshev.mymusicapplication.presenter.PlaylistPresenter
 import ru.iandreyshev.mymusicapplication.viewmodel.ViewModelInjector
 
 
@@ -23,7 +22,7 @@ class MusicApplication : Application() {
 
         mPlayerEventProvider = PlayerEventProvider()
         mPlayer.subscribe(mPlayerEventProvider)
-        mViewModelInjector = ViewModelInjector(instance.resources, instance.mPlayer, mPlayerEventProvider)
+        mViewModelInjector = ViewModelInjector(instance.resources, instance.mPlayer, mPlayerEventProvider, mPlaylist)
     }
 
     private fun onSelectSong(songId: Long) {
@@ -34,12 +33,6 @@ class MusicApplication : Application() {
 
     companion object {
         private lateinit var instance: MusicApplication
-
-        fun getPlaylistPresenter(): PlaylistPresenter {
-            val presenter = PlaylistPresenter()
-            instance.mPlaylist.subscribe(presenter)
-            return presenter
-        }
 
         fun getViewModelInjector(): ViewModelInjector {
             return instance.mViewModelInjector

@@ -10,7 +10,7 @@ import ru.iandreyshev.model.player.Timeline
 import ru.iandreyshev.mymusicapplication.R
 import ru.iandreyshev.mymusicapplication.application.IPlayerEventProvider
 
-class PlayerViewModel(
+open class PlayerViewModel(
     private val resources: Resources,
     private val player: Player,
     private val playerEventProvider: IPlayerEventProvider
