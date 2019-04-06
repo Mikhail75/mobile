@@ -11,11 +11,14 @@ import ru.iandreyshev.mymusicapplication.application.MusicApplication
 import ru.iandreyshev.mymusicapplication.viewmodel.PlayerViewModel
 import ru.iandreyshev.utils.disable
 import ru.iandreyshev.utils.enable
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class PlayerActivity : AppCompatActivity() {
 
     private val mInjector = MusicApplication.getViewModelInjector()
     private lateinit var mPlayerViewModel: PlayerViewModel
+    private var mFormatter = SimpleDateFormat("mm:ss")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +83,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun updateTimelineView(progress: Float, currentTime: String) {
-        tvTime.text = currentTime
+        tvTime.text = mFormatter.format(Date(currentTime.toLong()))
         sbTimeLine.progress = (TIMELINE_MAX * progress).toInt()
     }
 
