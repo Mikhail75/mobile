@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml:1:1-2:43
-INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml:1:1-2:43
-INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml:1:1-2:43
+ADDED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml:1:1-2:43
+INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml:1:1-2:43
+INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml:1:1-2:43
 	package
-		ADDED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml:2:11-41
-		INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
-		INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
+		ADDED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml:2:11-41
+		INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
+		INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml:1:11-69
+		ADDED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml:1:11-69
 uses-sdk
-INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
-INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
-INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
-INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
+INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
+INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
+INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
+INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
-		ADDED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
-		INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
+		INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
+		ADDED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
+		INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
-		ADDED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
-		INJECTED from C:\mobile\Lab04\utils\src\main\AndroidManifest.xml
+		INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
+		ADDED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml
+		INJECTED from H:\@ips\mobile\Lab04\utils\src\main\AndroidManifest.xml

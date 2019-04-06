@@ -36,6 +36,18 @@ class Player(
         )
     }
 
+    fun playingState(): PlayingState {
+        return mPlayingState
+    }
+
+    fun title(): String? {
+        return mTitle
+    }
+
+    fun timeLine(): Timeline {
+        return Timeline(mTimeInMillis, mPercent)
+    }
+
     /*
     * Функция для смены играющей музыки из плей-листа
     * */

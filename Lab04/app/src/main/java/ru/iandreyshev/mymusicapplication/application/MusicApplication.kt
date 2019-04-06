@@ -5,7 +5,7 @@ import ru.iandreyshev.model.player.Player
 import ru.iandreyshev.model.playlist.Playlist
 import ru.iandreyshev.model.repository.Repository
 import ru.iandreyshev.mymusicapplication.presenter.PlaylistPresenter
-import ru.iandreyshev.mymusicapplication.viewmodel.PlayerViewModelInjector
+import ru.iandreyshev.mymusicapplication.viewmodel.ViewModelInjector
 
 
 class MusicApplication : Application() {
@@ -13,13 +13,17 @@ class MusicApplication : Application() {
     private val mRepository = Repository()
     private val mPlaylist = Playlist(mRepository.getAllSongs(), ::onSelectSong)
     private val mPlayer = Player(this)
-    private lateinit var mPlayerViewModelInjector: PlayerViewModelInjector
+    private lateinit var mViewModelInjector: ViewModelInjector
+    private lateinit var mPlayerEventProvider: PlayerEventProvider
 
     override fun onCreate() {
         super.onCreate()
 
         instance = this
-        mPlayerViewModelInjector = PlayerViewModelInjector(instance.resources, instance.mPlayer)
+
+        mPlayerEventProvider = PlayerEventProvider()
+        mPlayer.subscribe(mPlayerEventProvider)
+        mViewModelInjector = ViewModelInjector(instance.resources, instance.mPlayer, mPlayerEventProvider)
     }
 
     private fun onSelectSong(songId: Long) {
@@ -37,8 +41,8 @@ class MusicApplication : Application() {
             return presenter
         }
 
-        fun getPlayerViewModelInjector(): PlayerViewModelInjector {
-            return instance.mPlayerViewModelInjector
+        fun getViewModelInjector(): ViewModelInjector {
+            return instance.mViewModelInjector
         }
     }
 }

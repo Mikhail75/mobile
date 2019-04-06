@@ -8,17 +8,20 @@ import kotlinx.android.synthetic.main.activity_player.*
 import ru.iandreyshev.model.player.PlayingState
 import ru.iandreyshev.mymusicapplication.R
 import ru.iandreyshev.mymusicapplication.application.MusicApplication
+import ru.iandreyshev.mymusicapplication.viewmodel.PlayerViewModel
 import ru.iandreyshev.utils.disable
 import ru.iandreyshev.utils.enable
 
 class PlayerActivity : AppCompatActivity() {
 
-    private val mInjector = MusicApplication.getPlayerViewModelInjector()
-    private val mPlayerViewModel = mInjector.getPlayerViewModel(this)
+    private val mInjector = MusicApplication.getViewModelInjector()
+    private lateinit var mPlayerViewModel: PlayerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
+
+        mPlayerViewModel = mInjector.getPlayerViewModel(this)
 
         mPlayerViewModel.trackTitle.observe(this, Observer {
             if (it != null) {
@@ -30,7 +33,7 @@ class PlayerActivity : AppCompatActivity() {
                 updatePlayingButtons(it)
             }
         })
-        mPlayerViewModel.timeline.observe(this,Observer {
+        mPlayerViewModel.timeline.observe(this, Observer {
             if (it != null) {
                 updateTimelineView(it.percent, it.timeInMillis.toString())
             }
@@ -81,7 +84,7 @@ class PlayerActivity : AppCompatActivity() {
         sbTimeLine.progress = (TIMELINE_MAX * progress).toInt()
     }
 
-    private fun updatePlayingButtons(state: PlayingState) {
+    private fun updatePlayingButtons(state: PlayingState?) {
         when (state) {
             PlayingState.Disabled -> {
                 btnStop.disable()

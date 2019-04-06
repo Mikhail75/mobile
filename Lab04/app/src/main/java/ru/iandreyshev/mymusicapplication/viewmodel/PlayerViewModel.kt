@@ -8,24 +8,37 @@ import ru.iandreyshev.model.player.Player
 import ru.iandreyshev.model.player.PlayingState
 import ru.iandreyshev.model.player.Timeline
 import ru.iandreyshev.mymusicapplication.R
+import ru.iandreyshev.mymusicapplication.application.IPlayerEventProvider
 
 class PlayerViewModel(
     private val resources: Resources,
-    private val player: Player
+    private val player: Player,
+    private val playerEventProvider: IPlayerEventProvider
 ) : ViewModel(), IPlayerPresenter {
 
-    val trackTitle = MutableLiveData<String>()
+    val trackTitle = MutableLiveData<String>().apply {
+        setValue(player.title())
+    }
     val timeline = MutableLiveData<Timeline>().apply {
-        setValue(Timeline(0, 0f))
+        setValue(player.timeLine())
     }
     val playingState = MutableLiveData<PlayingState>().apply {
-        setValue(PlayingState.Disabled)
+        setValue(player.playingState())
     }
 
     fun onPlay() = player.onPlay()
     fun onStop() = player.onStop()
     fun onRestart() = player.onRestart()
     fun onChangeTimePosition(timePercent: Float) = player.onChangeTimelinePosition(timePercent)
+
+    init {
+        playerEventProvider.subscribe(this)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        playerEventProvider.unsubscribe(this)
+    }
 
     override fun updateTitle(title: String?) {
         trackTitle.value = title ?: resources.getString(R.string.player_song_not_selected)
