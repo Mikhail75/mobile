@@ -16,6 +16,7 @@ class Player(
     private var mPresenter: IPlayerPresenter? = null
     private var mPlayingState: PlayingState = PlayingState.Disabled
     private var mTitle: String? = ""
+    private var mPoster: Int? = null
     private var mTimeInMillis: Int = 0
     private var mPercent: Float = 0f
 
@@ -44,6 +45,10 @@ class Player(
         return mTitle
     }
 
+    fun poster(): Int? {
+        return mPoster
+    }
+
     fun timeLine(): Timeline {
         return Timeline(mTimeInMillis, mPercent)
     }
@@ -57,6 +62,7 @@ class Player(
         mAndroidPlayer?.setOnCompletionListener { onStop() }
 
         mTitle = song.title
+        mPoster = song.poster
         mTimeInMillis = 0
         mPercent = 0f
         mPlayingState = PlayingState.Idle

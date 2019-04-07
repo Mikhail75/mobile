@@ -28,6 +28,10 @@ class PlayerEventProvider : IPlayerEventProvider, IPlayerPresenter  {
         mObservers.forEach { it.updateTitle(title) }
     }
 
+    override fun updatePoster(poster: Int?) {
+        mObservers.forEach { it.updatePoster(poster) }
+    }
+
     override fun updateTimeline(timeline: Timeline)  {
         mObservers.forEach { it.updateTimeline(timeline) }
     }

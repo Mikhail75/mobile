@@ -31,6 +31,11 @@ class PlayerActivity : AppCompatActivity() {
                 updateTitleView(it)
             }
         })
+        mPlayerViewModel.trackPoster.observe(this, Observer {
+            if (it != null) {
+                updatePosterView(it)
+            }
+        })
         mPlayerViewModel.playingState.observe(this, Observer {
             if (it != null) {
                 updatePlayingButtons(it)
@@ -80,6 +85,13 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun updateTitleView(title: String) {
         tvTitle.text = title
+    }
+
+    private fun updatePosterView(poster: Int?) {
+        if (poster != null)
+        {
+            imgPoster.setImageResource(poster)
+        }
     }
 
     private fun updateTimelineView(progress: Float, currentTime: String) {

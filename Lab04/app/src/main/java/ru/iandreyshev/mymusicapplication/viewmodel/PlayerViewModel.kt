@@ -19,6 +19,9 @@ open class PlayerViewModel(
     val trackTitle = MutableLiveData<String>().apply {
         setValue(player.title())
     }
+    val trackPoster = MutableLiveData<Int>().apply {
+        setValue(player.poster())
+    }
     val timeline = MutableLiveData<Timeline>().apply {
         setValue(player.timeLine())
     }
@@ -42,6 +45,10 @@ open class PlayerViewModel(
 
     override fun updateTitle(title: String?) {
         trackTitle.value = title ?: resources.getString(R.string.player_song_not_selected)
+    }
+
+    override fun updatePoster(poster: Int?) {
+        trackPoster.value = poster
     }
 
     override fun updateTimeline(timeline: Timeline) {

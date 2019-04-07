@@ -5,8 +5,8 @@ import ru.iandreyshev.model.R
 class Repository : IRepository {
 
     private val mSongs: List<Song> = listOf(
-            Song(0, "Grand Theft Auto Vice City - Mission completed", R.raw.mission_completed),
-            Song(1, "Bomfunk Mc's - Freestyler", R.raw.freestyler)
+            Song(0, "Grand Theft Auto Vice City - Mission completed", R.raw.kot_02, R.raw.mission_completed),
+            Song(1, "Bomfunk Mc's - Freestyler", R.raw.kot_01, R.raw.freestyler)
     )
 
     override fun getAllSongs(): List<ISong> {
