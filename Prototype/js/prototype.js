@@ -25,12 +25,20 @@ const hotspotHandlers = new Map();
 const hotspotTooltips = [];
 
 function showMainScreen() {
+	screen.style.background = `no-repeat center url("./image/main_screen_1.svg")`;
 	hotspotHandlers.clear();
-	hotspotHandlers.set(new Hotspot(20, 20, 50, 50), () => {
-		console.log("Ok, hotspot!")
+	hotspotHandlers.set(new Hotspot(160, 100, 60, 60), () => {
+		showMainScreen2();
 	});
 
-	screen.style.background = `no-repeat center url("./image/main_screen_1.svg")`;
+}
+
+function showMainScreen2() {
+	screen.style.background = `no-repeat center url("./image/main_screen_2.svg")`;
+	hotspotHandlers.clear();
+	hotspotHandlers.set(new Hotspot(89, 100, 60, 60), () => {
+		showMainScreen();
+	});
 }
 
 /**
