@@ -1,5 +1,6 @@
 package io.github.psgroup.model
 
+import android.os.AsyncTask
 import android.os.Handler
 import android.os.Looper
 import kotlin.concurrent.thread
@@ -10,62 +11,59 @@ class CookModel {
         fun update(cookingState: CookingState)
     }
 
-    private var mPresenter: IPresenter? = null
-    private var mIsCancelled = false
-    private var mState: CookingState = CookingState.NotStarted
+    inner class OrderPizzaTask : AsyncTask<String, Int, CookingState>() {
+        override fun onPreExecute() {
+            super.onPreExecute()
+            mState = CookingState.InProgress(MAX_PROGRESS, 0)
+            mPresenter?.update(mState)
+        }
 
-    fun start(pizza: String) {
-        // поменять состояние на начальное
-        mIsCancelled = false
-        mState = CookingState.InProgress(MAX_PROGRESS, 0)
-        mPresenter?.update(mState)
-
-        // создать и запустить поток
-        thread {
-            val handler = Handler(Looper.getMainLooper())
+        override fun doInBackground(vararg params: String?): CookingState? {
+            val pizza = params.getOrNull(0) ?: ""
             var progress = MIN_PROGRESS
             Thread.sleep(1000)
 
-            // Проверяем валидность имени пиццы
             if (pizza !in AVAILABLE_PIZZA) {
-                handler.post {
-                    if (!mIsCancelled) {
-                        mState = CookingState.Error(CookingError.INVALID_PIZZA_NAME)
-                        mPresenter?.update(mState)
-                    }
-                }
-                return@thread
+                return CookingState.Error(CookingError.INVALID_PIZZA_NAME)
             }
 
             while (progress <= MAX_PROGRESS) {
-                // Каждый шаг приготовления занимает одну секунду
                 Thread.sleep(1000)
                 progress += PROGRESS_STEP
 
-                // Если приготовление было отменено, то выходим из цикла
-                if (mIsCancelled) {
-                    return@thread
-                }
+                if (isCancelled) return null
 
-                handler.post {
-                    if (!mIsCancelled) {
-                        mState = CookingState.InProgress(MAX_PROGRESS, progress)
-                        mPresenter?.update(mState)
-                    }
-                }
+                publishProgress(progress)
             }
 
-            handler.post {
-                if (!mIsCancelled) {
-                    mState = CookingState.Completed
-                    mPresenter?.update(mState)
-                }
-            }
+            return CookingState.Completed
+        }
+
+        override fun onProgressUpdate(vararg values: Int?) {
+            super.onProgressUpdate(*values)
+            val progress = values.getOrNull(0) ?: 0
+            mState = CookingState.InProgress(MAX_PROGRESS, progress)
+            mPresenter?.update(mState)
+        }
+
+        override fun onPostExecute(result: CookingState?) {
+            super.onPostExecute(result)
+            mState = result ?: return
+            mPresenter?.update(mState)
         }
     }
 
+    private var mPresenter: IPresenter? = null
+    private var mIsCancelled = false
+    private var mState: CookingState = CookingState.NotStarted
+    private var mTask: AsyncTask<*, *, *>? = null
+
+    fun start(pizza: String) {
+        mTask = OrderPizzaTask().execute(pizza)
+    }
+
     fun stop() {
-        mIsCancelled = true
+        mTask?.cancel(false)
         mState = CookingState.NotStarted
         mPresenter?.update(mState)
     }
